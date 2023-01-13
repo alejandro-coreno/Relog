@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practica Relog</title>
+    <style>
+        *{
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        div {
+            display: inline-flex;
+            margin-left: 20px;
+        }
+
+        .contenedor{
+            width: 70%;
+            /* border: 10px solid #000; */
+            margin: 150px auto;
+            background-color: #052c48;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0px 12px 13px rgba(0, 0, 0, 0.7);
+            /* border: 1px solid #000; */
+            /* background-color: rgb(37, 192, 140); */
+            /* margin: ;  */
+            /* margin: 100px 0 100px 300px; */
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s linear;
+        }
+        .contenedor:hover{
+            transform: scale(1.1);
+        }
+
+        .hora #ampm {
+            margin-left: 8px;
+            font-size: 50px;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .hora{
+            display: flex;
+            justify-content: center;
+            /* border: 1px solid #000; */
+           
+        }
+
+        .fecha{
+            display: flex;
+            justify-content: center;
+        }
+        .hora p {
+            /* border: 1px solid #000; */
+            color: white;
+            margin: 0;
+            font-size: 80px;
+            margin-top: 50px;
+        }
+
+        .fecha p {
+            margin: 0;
+            margin-right: 15px;
+            font-size: 50px;
+            font-style: italic;
+            color: white;
+        }
+        .logo{
+            /* border: 1px solid #000; */
+            display: flex;
+            justify-content: flex-start;
+            width: 80%;
+            text-indent: 50px;
+            padding: 10px;
+        }
+
+
+
+        @media screen and (max-width: 900px) {
+            .hora{
+                /* border: 1px solid #000; */
+                width: 90%;
+            }
+
+            .hora p{
+                font-size: 30px;
+                letter-spacing: 2px;
+            }
+
+            .contenedor{
+                box-shadow: none;
+            }
+            .fecha p{                
+                font-size: 30px;
+            }
+            .hora p:nth-child(6){
+                display: none;
+            }
+            .logo{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+        
+        }
+
+        @media screen and (max-width: 800px) {
+            .hora p{
+                font-size: 25px;
+            }
+            .fecha{
+                font-size: 25px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .fecha{
+                display: none;
+            }
+
+            .hora p{
+                font-size: 40px;
+            }
+            .logo{
+                /* border: 1px solid #000; */
+                width: 70%;
+                display: flex;
+                justify-content: center;
+            }
+        }
+        /* div img{
+            background-color: white;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="hora">
+            <p id="horas"></p>
+            <p>:</p>
+            <p id="minutos"></p>
+            <p>:</p>
+            <p id="segundos"></p>
+            <p id="ampm"></p>
+        </div>
+
+        <br>
+
+        <div class="fecha">
+            <p id="diase"></p>
+            <p id="dia"></p>
+            <p>de</p>
+            <p id="mes"></p>
+            <p>del</p>
+            <p id="year"></p>
+        </div>
+
+        <div class="logo">
+            <a href="https://github.com/alejandro-coreno" target="_blank"><img src="https://img.icons8.com/ios-filled/50/000000/github.png" /></a>
+        </div>
+
+    </div>
+
+    <script>
+        (function actulizarDatos() {
+
+            // Obtener los datos tiempo y fecha
+
+            var fecha = new Date();
+            ampm,
+                horas = fecha.getHours(),
+                minutos = fecha.getMinutes(),
+                segundos = fecha.getSeconds(),
+                diaSemana = fecha.getDay(), // Comienza desde 0
+                dias = fecha.getDate(),
+                mes = fecha.getMonth(), // Comienza desde 0
+                year = fecha.getFullYear();
+
+            // Obtenemos los valores del HTML
+
+            var elementoHoras = document.getElementById("horas"),
+                elementoMinutos = document.getElementById("minutos"),
+                elementoSegundos = document.getElementById("segundos"),
+                elementoAmPm = document.getElementById("ampm"),
+                elementoDiaSemana = document.getElementById("diase"),
+                elementoDia = document.getElementById("dia"),
+                elementoMes = document.getElementById("mes"),
+                elementoYear = document.getElementById("year");
+
+
+            // Declaramos un arreglo para los dias y meses
+
+            var arraySemana = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
+            var arrayMes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+            // Asignamos datos de la fecha
+
+            elementoDiaSemana.innerText = arraySemana[diaSemana];
+            elementoDia.innerHTML = dias;
+            elementoMes.innerHTML = arrayMes[mes];
+            elementoYear.innerText = year;
+
+            // Transformar relog de 24 hrs a 12
+
+
+            if (horas >= 12) {
+                horas = horas - 12;
+                ampm = 'pm'
+            } else {
+                ampm = 'am'
+            }
+
+            //Agregar minutos y segundos el 0
+
+            if (minutos < 10) {
+                minutos = "0" + minutos;
+            }
+
+            if (segundos < 10) {
+                segundos = "0" + segundos;
+            }
+
+            if (horas == 0) {
+                horas = 12;
+            }
+
+            // Asignar elementos del tiempo
+
+            elementoHoras.innerHTML = horas;
+            elementoMinutos.innerHTML = minutos;
+            elementoSegundos.innerHTML = segundos;
+            elementoAmPm.innerHTML = ampm;
+
+            // Con el setInterval estara actualizando los datos cada segundo
+            setInterval(actulizarDatos, 1000);
+
+        }());
+    </script>
+</body>
+
+</html>
